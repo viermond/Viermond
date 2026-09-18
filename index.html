@@ -1,0 +1,1081 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- =========================================================
+         BASIC HTML SETTINGS
+         ========================================================= -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Viermond - Official Links"
+    >
+
+    <title>Viermond</title>
+
+
+    <!-- =========================================================
+         FAVICON
+         
+         Put favicon.png next to index.html
+         ========================================================= -->
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="./Untitled design (1).png"
+    >
+
+
+    <style>
+
+        /* =========================================================
+           VIERMOND — PREMIUM LINK LANDING PAGE
+           
+           FILE STRUCTURE:
+
+           project/
+           ├── index.html
+           ├── background.jpg
+           ├── logo.png
+           └── favicon.png
+
+           ========================================================= */
+
+
+        /* =========================================================
+           1. EDITABLE COLORS
+           ========================================================= */
+
+        :root {
+
+            /* Dark purple hover color */
+            --accent: #4B235F;
+
+            /* Normal icon + text color */
+            --text: #ffffff;
+
+            /* Default link background */
+            --button-bg: rgba(255, 255, 255, 0.10);
+
+            /* Default link border */
+            --button-border: rgba(255, 255, 255, 0.30);
+
+            /* Hover text + icon color */
+            --hover-text: #ffffff;
+        }
+
+
+        /* =========================================================
+           2. RESET
+           ========================================================= */
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            overflow: hidden;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background: #111;
+        }
+
+
+        /* =========================================================
+           3. FULL-SCREEN PAGE
+           ========================================================= */
+
+        .page {
+
+            position: relative;
+
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            isolation: isolate;
+        }
+
+
+        /* =========================================================
+           4. FULL-SCREEN BACKGROUND IMAGE
+           ========================================================= */
+
+        .background-image {
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            /*
+             * COVER makes the image fill the entire screen.
+             * The image keeps its original proportions.
+             * Some cropping may happen on different screen ratios.
+             */
+
+            object-fit: cover;
+
+            object-position: center center;
+
+            z-index: -3;
+
+            animation:
+                backgroundReveal
+                1.2s
+                ease-out
+                both;
+        }
+
+
+        /* =========================================================
+           5. SUBTLE DARK OVERLAY
+           ========================================================= */
+
+        .background-overlay {
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            /*
+             * Keep this subtle so the original image
+             * remains visible.
+             */
+
+            background: rgba(0, 0, 0, 0.16);
+
+            z-index: -2;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================================
+           6. CENTERED CONTENT
+           ========================================================= */
+
+        .content {
+
+            position: relative;
+
+            z-index: 1;
+
+            width: min(100% - 40px, 430px);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 28px;
+
+            padding: 30px 0;
+        }
+
+
+        /* =========================================================
+           7. LOGO
+           ========================================================= */
+
+        .logo {
+
+            display: block;
+
+            width: auto;
+            height: auto;
+
+            /*
+             * Maximum logo size.
+             * It automatically becomes smaller on mobile.
+             */
+
+            max-width: min(260px, 68vw);
+
+            max-height: 150px;
+
+            /*
+             * Preserve original proportions.
+             */
+
+            object-fit: contain;
+
+            margin: 0 0 10px;
+
+            opacity: 0;
+
+            animation:
+                logoReveal
+                0.9s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.15s
+                forwards;
+        }
+
+
+        /* =========================================================
+           8. LINKS CONTAINER
+           ========================================================= */
+
+        .links {
+
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+
+        /* =========================================================
+           9. LINK BUTTON
+           ========================================================= */
+
+        .link-button {
+
+            position: relative;
+
+            width: min(100%, 300px);
+
+            min-height: 52px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+
+            padding: 12px 22px;
+
+            border: 1px solid var(--button-border);
+
+            border-radius: 8px;
+
+            background: var(--button-bg);
+
+            color: var(--text);
+
+            text-decoration: none;
+
+            overflow: hidden;
+
+            isolation: isolate;
+
+            opacity: 0;
+
+            transform: translateY(12px);
+
+            transition:
+                color 0.35s ease,
+                border-color 0.35s ease,
+                background-color 0.35s ease,
+                transform 0.35s ease;
+        }
+
+
+        /* =========================================================
+           10. LEFT → RIGHT PURPLE HOVER ANIMATION
+           ========================================================= */
+
+        .link-button::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            /*
+             * Dark purple hover color
+             */
+
+            background: var(--accent);
+
+            /*
+             * Start completely hidden
+             */
+
+            transform: scaleX(0);
+
+            /*
+             * IMPORTANT:
+             * Animation begins from LEFT.
+             */
+
+            transform-origin: left center;
+
+            transition:
+                transform 0.4s
+                cubic-bezier(0.22, 1, 0.36, 1);
+
+            z-index: -1;
+        }
+
+
+        /* =========================================================
+           11. BUTTON ENTRANCE ANIMATIONS
+           ========================================================= */
+
+        .link-button:nth-child(1) {
+
+            animation:
+                linkReveal
+                0.65s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.35s
+                forwards;
+        }
+
+
+        .link-button:nth-child(2) {
+
+            animation:
+                linkReveal
+                0.65s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.45s
+                forwards;
+        }
+
+
+        .link-button:nth-child(3) {
+
+            animation:
+                linkReveal
+                0.65s
+                cubic-bezier(0.22, 1, 0.36, 1)
+                0.55s
+                forwards;
+        }
+
+
+        /* =========================================================
+           12. ICONS
+           ========================================================= */
+
+        .icon {
+
+            width: 22px;
+            height: 22px;
+
+            flex: 0 0 22px;
+
+            display: block;
+
+            /*
+             * SVG icons are solid and inherit
+             * the link text color.
+             */
+
+            fill: currentColor;
+
+            transition:
+                transform 0.35s ease,
+                color 0.35s ease;
+        }
+
+
+        /* =========================================================
+           13. LINK TEXT
+           ========================================================= */
+
+        .link-text {
+
+            position: relative;
+
+            font-size: 15px;
+
+            font-weight: 500;
+
+            letter-spacing: 0.02em;
+
+            line-height: 1;
+
+            transition:
+                color 0.35s ease,
+                transform 0.35s ease;
+        }
+
+
+        /* =========================================================
+           14. HOVER
+           ========================================================= */
+
+        @media (hover: hover) and (pointer: fine) {
+
+            .link-button:hover {
+
+                color: var(--hover-text);
+
+                border-color: var(--accent);
+
+                transform: translateY(-1px);
+            }
+
+
+            /*
+             * Purple background travels
+             * from LEFT → RIGHT.
+             */
+
+            .link-button:hover::before {
+
+                transform: scaleX(1);
+            }
+
+
+            .link-button:hover .icon {
+
+                transform: translateX(2px);
+            }
+
+
+            .link-button:hover .link-text {
+
+                transform: translateX(1px);
+            }
+        }
+
+
+        /* =========================================================
+           15. KEYBOARD FOCUS
+           ========================================================= */
+
+        .link-button:focus-visible {
+
+            outline: 2px solid var(--accent);
+
+            outline-offset: 4px;
+
+            border-color: var(--accent);
+        }
+
+
+        /* =========================================================
+           16. BACKGROUND ANIMATION
+           ========================================================= */
+
+        @keyframes backgroundReveal {
+
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        /* =========================================================
+           17. LOGO ENTRANCE
+           ========================================================= */
+
+        @keyframes logoReveal {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(14px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================================
+           18. LINK ENTRANCE
+           ========================================================= */
+
+        @keyframes linkReveal {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(12px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================================
+           19. TABLET
+           ========================================================= */
+
+        @media (max-width: 768px) {
+
+            .content {
+
+                width: min(100% - 36px, 390px);
+
+                gap: 24px;
+            }
+
+
+            .logo {
+
+                max-width: min(230px, 62vw);
+
+                max-height: 130px;
+
+                margin-bottom: 8px;
+            }
+
+
+            .links {
+
+                gap: 12px;
+            }
+
+
+            .link-button {
+
+                width: min(100%, 300px);
+
+                min-height: 50px;
+            }
+        }
+
+
+        /* =========================================================
+           20. MOBILE
+           ========================================================= */
+
+        @media (max-width: 480px) {
+
+            .content {
+
+                width: calc(100% - 32px);
+
+                gap: 21px;
+
+                padding: 24px 0;
+            }
+
+
+            .logo {
+
+                max-width: min(205px, 64vw);
+
+                max-height: 115px;
+
+                margin-bottom: 6px;
+            }
+
+
+            .links {
+
+                gap: 11px;
+            }
+
+
+            .link-button {
+
+                width: 100%;
+
+                min-height: 50px;
+
+                padding: 13px 20px;
+            }
+
+
+            .icon {
+
+                width: 21px;
+                height: 21px;
+
+                flex-basis: 21px;
+            }
+
+
+            .link-text {
+
+                font-size: 15px;
+            }
+        }
+
+
+        /* =========================================================
+           21. SMALL HEIGHT SCREENS
+           ========================================================= */
+
+        @media (max-height: 650px) {
+
+            .content {
+
+                gap: 15px;
+            }
+
+
+            .logo {
+
+                max-height: 90px;
+
+                margin-bottom: 2px;
+            }
+
+
+            .links {
+
+                gap: 8px;
+            }
+
+
+            .link-button {
+
+                min-height: 46px;
+            }
+        }
+
+
+        /* =========================================================
+           22. REDUCED MOTION
+           ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration: 0.01ms !important;
+
+                animation-iteration-count: 1 !important;
+
+                transition-duration: 0.01ms !important;
+            }
+
+
+            .background-image,
+            .logo,
+            .link-button {
+
+                opacity: 1;
+
+                transform: none;
+            }
+
+
+            .link-button::before {
+
+                transition: none;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         FULL-SCREEN PAGE
+         ========================================================= -->
+
+    <main class="page">
+
+
+        <!-- =====================================================
+             BACKGROUND IMAGE
+
+             Replace background.jpg with your own image.
+             ===================================================== -->
+
+        <img
+            src="./daniele-levis-pelusi-nEczFlV-GMI-unsplash.jpg"
+            alt=""
+            class="background-image"
+            aria-hidden="true"
+        >
+
+
+        <!-- Subtle readability overlay -->
+
+        <div
+            class="background-overlay"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- =====================================================
+             CENTERED CONTENT
+             ===================================================== -->
+
+        <div class="content">
+
+
+            <!-- =================================================
+                 LOGO
+
+                 Replace logo.png with your own logo.
+                 ================================================= -->
+
+            <img
+                src="./Untitled design (1).png"
+                alt="Viermond Logo"
+                class="logo"
+            >
+
+
+            <!-- =================================================
+                 EXACTLY THREE LINKS
+                 ================================================= -->
+
+            <nav
+                class="links"
+                aria-label="Viermond links"
+            >
+
+
+                <!-- =============================================
+                     01 — WEBSITE
+                     ============================================= -->
+
+                <a
+                    class="link-button"
+                    id="website-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Viermond website"
+                >
+
+                    <!-- Solid Store Icon -->
+
+                    <svg
+                        class="icon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                    >
+
+                        <path d="
+                            M3 9.5
+                            L4.4 4
+                            H19.6
+                            L21 9.5
+                            V11
+
+                            C21 12.1 20.1 13 19 13
+
+                            C18 13 17.2 12.4 17 11.5
+
+                            C16.8 12.4 16 13 15 13
+
+                            C14 13 13.2 12.4 13 11.5
+
+                            C12.8 12.4 12 13 11 13
+
+                            C10 13 9.2 12.4 9 11.5
+
+                            C8.8 12.4 8 13 7 13
+
+                            C6 13 5.2 12.4 5 11.5
+
+                            C4.8 12.4 4 13 3 13
+
+                            V9.5
+                            Z
+
+                            M5 15
+                            H19
+                            V21
+                            H5
+                            Z
+
+                            M9 16.5
+                            V21
+                            H15
+                            V16.5
+                            Z
+                        "/>
+
+                    </svg>
+
+
+                    <span class="link-text">
+                        Website
+                    </span>
+
+                </a>
+
+
+                <!-- =============================================
+                     02 — INSTAGRAM
+                     ============================================= -->
+
+                <a
+                    class="link-button"
+                    id="instagram-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Viermond on Instagram"
+                >
+
+                    <!-- Solid Instagram Icon -->
+
+                    <svg
+                        class="icon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                    >
+
+                        <path d="
+                            M7 2
+                            H17
+
+                            C19.76 2 22 4.24 22 7
+
+                            V17
+
+                            C22 19.76 19.76 22 17 22
+
+                            H7
+
+                            C4.24 22 2 19.76 2 17
+
+                            V7
+
+                            C2 4.24 4.24 2 7 2
+
+                            Z
+
+                            M7 4
+
+                            C5.34 4 4 5.34 4 7
+
+                            V17
+
+                            C4 18.66 5.34 20 7 20
+
+                            H17
+
+                            C18.66 20 20 18.66 20 17
+
+                            V7
+
+                            C20 5.34 18.66 4 17 4
+
+                            H7
+
+                            Z
+
+                            M12 7
+
+                            A5 5 0 1 0 12 17
+
+                            A5 5 0 1 0 12 7
+
+                            Z
+
+                            M12 9
+
+                            A3 3 0 1 1 12 15
+
+                            A3 3 0 1 1 12 9
+
+                            Z
+
+                            M17.5 5.5
+
+                            A1.5 1.5 0 1 0 17.5 8.5
+
+                            A1.5 1.5 0 1 0 17.5 5.5
+
+                            Z
+                        "/>
+
+                    </svg>
+
+
+                    <span class="link-text">
+                        Instagram
+                    </span>
+
+                </a>
+
+
+                <!-- =============================================
+                     03 — TIKTOK
+                     ============================================= -->
+
+                <a
+                    class="link-button"
+                    id="tiktok-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Viermond on TikTok"
+                >
+
+                    <!-- Solid TikTok Icon -->
+
+                    <svg
+                        class="icon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                    >
+
+                        <path d="
+                            M15.5 3
+
+                            C15.8 5
+                            16.9 6.5
+                            19 7
+
+                            V9.4
+
+                            C17.5 9.4
+                            16.2 9
+                            15 8.2
+
+                            V15.5
+
+                            A5.5 5.5 0 1 1
+                            10.3 10.1
+
+                            V12.6
+
+                            A3 3 0 1 0
+                            12.5 15.5
+
+                            V3
+
+                            H15.5
+
+                            Z
+                        "/>
+
+                    </svg>
+
+
+                    <span class="link-text">
+                        TikTok
+                    </span>
+
+                </a>
+
+
+            </nav>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         LINK CONFIGURATION
+
+         EDIT ONLY THE THREE URLS BELOW.
+         ========================================================= -->
+
+    <script>
+
+        // ========================================================
+        // EDIT YOUR LINKS HERE
+        // ========================================================
+
+        const links = {
+
+            website:
+                "https://viermond.store",
+
+            instagram:
+                "https://www.instagram.com/vier.mond/",
+
+            tiktok:
+                "https://www.tiktok.com/@viermond40"
+        };
+
+
+        // ========================================================
+        // APPLY URLS TO THE THREE LINKS
+        // ========================================================
+
+        document.getElementById("website-link").href =
+            links.website;
+
+
+        document.getElementById("instagram-link").href =
+            links.instagram;
+
+
+        document.getElementById("tiktok-link").href =
+            links.tiktok;
+
+    </script>
+
+</body>
+</html>
